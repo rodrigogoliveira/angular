@@ -1,0 +1,80 @@
+$load-lista: (
+  p: (
+    border-size: 0.4em,
+    border-color: setColor(geral),
+    size: getFontSize(medium)
+  ),
+  m: (
+    border-size: 0.5em,
+    border-color: setColor(geral),
+    size: (getFontSize(medium) * 3)
+  ),
+  g: (
+    border-size: 0.6em,
+    border-color: setColor(geral),
+    size: (getFontSize(medium) * 5)
+  ),
+  p-light: (
+    border-size: 0.4em,
+    border-color: setColor(geral, light),
+    size: getFontSize(medium)
+  ),
+  m-light: (
+    border-size: 0.5em,
+    border-color: setColor(geral, light),
+    size: (getFontSize(medium) * 3)
+  ),
+  g-light: (
+    border-size: 0.6em,
+    border-color: setColor(geral, light),
+    size: (getFontSize(medium) * 5)
+  )
+);
+
+.loading {
+  display: block;
+  font-size: 1em;
+  overflow: hidden;
+  position: relative;
+  text-indent: -9999em;
+
+  animation: load-amil 0.45s infinite linear;
+
+  transform: translateZ(0);
+
+  &,
+  &:after {
+    border-radius: 50%;
+  }
+
+  @each $classe, $configs in $load-lista {
+    &.#{$classe} {
+      border-top: solid map-get($configs, border-size) transparentize(map-get($configs, border-color), .8); /* parametrizar todas as unidades de cores pelo sass maps */
+      border-right: solid map-get($configs, border-size) transparentize(map-get($configs, border-color), .8);
+      border-bottom: solid map-get($configs, border-size) transparentize(map-get($configs, border-color), .8);
+      border-left: solid map-get($configs, border-size) transparentize(map-get($configs, border-color), 0);
+      /* borders top, right e bottom são da cor padrão do site com opacidade baixa (0.2), border-left é com opacidade total (1) */
+
+      height: map-get($configs, size); /* Altura e largura do loading.  */
+      width: map-get($configs, size);
+    }
+  }
+}
+
+@-webkit-keyframes load-amil {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes load-amil {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
